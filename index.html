@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>AntennaNS OTA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ESP Web Tools -->
   <script type="module"
@@ -12,23 +12,19 @@
 
   <style>
     :root {
-      --bg-main: #0b0b12;
-      --bg-card: #151521;
-      --text-main: #eaeaf0;
-      --text-muted: #a0a0b0;
-      --accent: #030180;
-    }
-
-    * {
-      box-sizing: border-box;
+      --accent: #5a5aff;
+      --bg: #0e0f14;
+      --card: #171824;
+      --text: #ffffff;
+      --text-muted: #a0a3bd;
     }
 
     body {
       margin: 0;
       font-family: Inter, system-ui, sans-serif;
-      background: radial-gradient(circle at top, #1e1e2f, var(--bg-main));
-      color: var(--text-main);
-      min-height: 100vh;
+      background: radial-gradient(circle at top, #1a1b2e, var(--bg));
+      color: var(--text);
+      height: 100vh;
     }
 
     .container {
@@ -37,77 +33,95 @@
       padding: 40px 20px 60px;
     }
 
-    header {
+    h1 {
       text-align: center;
-      margin-bottom: 48px;
+      font-size: 42px;
+      margin-bottom: 10px;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 36px;
-      font-weight: 700;
-    }
-
-    header p {
-      margin-top: 12px;
-      font-size: 16px;
+    .subtitle {
+      text-align: center;
       color: var(--text-muted);
-      line-height: 1.5;
+      font-size: 18px;
+      margin-bottom: 50px;
     }
 
-    .projects {
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 24px;
     }
 
     .card {
-      background: var(--bg-card);
+      position: relative;
+      background: linear-gradient(180deg, #1d1e30, var(--card));
       border-radius: 18px;
       padding: 24px;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 14px;
     }
 
     .card h2 {
-      margin: 0 0 12px;
-      font-size: 20px;
+      margin: 0;
+      font-size: 22px;
     }
 
     .card p {
-      margin: 0 0 24px;
-      font-size: 14px;
+      margin: 0;
       color: var(--text-muted);
-      line-height: 1.5;
+      font-size: 15px;
+      line-height: 1.4;
       flex-grow: 1;
     }
 
-    button {
-      width: 100%;
+    /* КНОПКА ПРОШИВКИ */
+    .flash-btn {
       padding: 14px;
-      font-size: 15px;
       border-radius: 12px;
-      border: none;
-      cursor: pointer;
       background: linear-gradient(135deg, #7c7cff, var(--accent));
       color: white;
       font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
       box-shadow: 0 4px 20px rgba(90, 90, 255, 0.4);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform .15s ease, box-shadow .15s ease;
     }
 
-    button:hover {
+    .flash-btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 6px 26px rgba(90, 90, 255, 0.6);
     }
 
-    footer {
-      margin-top: 48px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
+    /* GITHUB ICON */
+    .github-link {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.6;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .github-link:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .github-link svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    esp-web-install-button {
+      display: block;
     }
   </style>
 </head>
@@ -115,62 +129,54 @@
 <body>
 
   <div class="container">
+    <h1>AntennaNS OTA</h1>
+    <div class="subtitle">
+      Онлайн-прошивка устройств AntennaNS напрямую через браузер
+    </div>
 
-    <header>
-      <h1>AntennaNS OTA</h1>
-      <p>
-        Онлайн-прошивка устройств на ESP8266.<br>
-        Подключите устройство по USB и выберите нужный проект.
-      </p>
-    </header>
+    <div class="grid">
 
-    <section class="projects">
-
-      <!-- Проект 1 -->
       <div class="card">
-        <h2>Проект №1</h2>
-        <p>
-          Базовая прошивка для Wemos D1 mini.
-        </p>
+        <a class="github-link"
+           href="https://github.com/antennanastolbe/SmartSpray"
+           target="_blank" rel="noopener"
+           title="Открыть репозиторий">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 0.5C5.73 0.5.5 5.74.5 12.02c0 5.1 3.29 9.43 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.55-3.88-1.55-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.72-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.3 1.19-3.11-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.5 3.17-1.19 3.17-1.19.63 1.59.23 2.77.11 3.06.74.81 1.19 1.85 1.19 3.11 0 4.43-2.7 5.41-5.28 5.69.41.36.78 1.08.78 2.18 0 1.57-.02 2.84-.02 3.22 0 .31.21.68.8.56 4.56-1.53 7.85-5.86 7.85-10.96C23.5 5.74 18.27.5 12 .5z"/>
+          </svg>
+        </a>
 
-        <esp-web-install-button manifest="firmware/project1.json">
-          <button slot="install" class="flash-btn">Прошить</button>
+        <h2>SmartSpray</h2>
+        <p>Прошивка для умного освежителя воздуха на базе ESP8266.</p>
+
+        <esp-web-install-button manifest="firmwares/smartspray/manifest.json">
+          <div slot="activate" class="flash-btn">
+            Прошить
+          </div>
         </esp-web-install-button>
       </div>
 
-
-      <!-- Проект 2 -->
       <div class="card">
-        <h2>Проект №2</h2>
-        <p>
-          Расширенная версия с дополнительным функционалом
-          и поддержкой OTA по Wi-Fi.
-        </p>
+        <a class="github-link"
+           href="https://github.com/antennanastolbe/SmartOLED"
+           target="_blank" rel="noopener"
+           title="Открыть репозиторий">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 0.5C5.73 0.5.5 5.74.5 12.02c0 5.1 3.29 9.43 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.55-3.88-1.55-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.72-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.3 1.19-3.11-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.5 3.17-1.19 3.17-1.19.63 1.59.23 2.77.11 3.06.74.81 1.19 1.85 1.19 3.11 0 4.43-2.7 5.41-5.28 5.69.41.36.78 1.08.78 2.18 0 1.57-.02 2.84-.02 3.22 0 .31.21.68.8.56 4.56-1.53 7.85-5.86 7.85-10.96C23.5 5.74 18.27.5 12 .5z"/>
+          </svg>
+        </a>
 
-        <esp-web-install-button manifest="firmware/project2.json">
-          <button>Прошить</button>
+        <h2>SmartOLED</h2>
+        <p>Прошивка для устройства SmartOLED на базе ESP8266.</p>
+
+        <esp-web-install-button manifest="firmwares/smartoled/manifest.json">
+          <div slot="activate" class="flash-btn">
+            Прошить
+          </div>
         </esp-web-install-button>
       </div>
 
-      <!-- Проект 3 -->
-      <div class="card">
-        <h2>Проект №3</h2>
-        <p>
-          Экспериментальная версия.
-          Используйте только если понимаете, что делаете.
-        </p>
-
-        <esp-web-install-button manifest="firmware/project3.json">
-          <button>Прошить</button>
-        </esp-web-install-button>
-      </div>
-
-    </section>
-
-    <footer>
-      Работает в Google Chrome и Microsoft Edge
-    </footer>
-
+    </div>
   </div>
 
 </body>
