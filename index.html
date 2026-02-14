@@ -1,1 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AntennaNS OTA</title>
+</head>
+<body>
 
+<h1>Прошивка Wemos D1 mini</h1>
+
+<p>
+  Подключите устройство по USB и нажмите кнопку ниже.<br>
+  Работает в Google Chrome / Edge.
+</p>
+
+<script
+  type="module"
+  src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js">
+</script>
+
+<esp-web-install-button manifest="firmware/manifest.json">
+  <button style="font-size:18px;padding:10px 20px;">
+    Прошить устройство
+  </button>
+</esp-web-install-button>
+
+</body>
+</html>
